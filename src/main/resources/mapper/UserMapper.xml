@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdx.oneruri.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zdx.oneruri.entity.User">
+        <id column="uid" property="uid" />
+        <result column="password" property="password" />
+        <result column="username" property="username" />
+        <result column="power" property="power" />
+        <result column="status" property="status" />
+        <result column="avatar" property="avatar" />
+        <result column="sex" property="sex" />
+        <result column="address" property="address" />
+        <result column="birthday" property="birthday" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="reg_date" property="regDate" />
+        <result column="description" property="description" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        uid, password, username, power, status, avatar,sex, address, birthday, phone, email, reg_date, description
+    </sql>
+
+    <!--默认注册用户权限为普通用户，状态为正常-->
+    <insert id="registerService">
+        insert into user(username,password,power,status) values(#{username},#{password},0,'正常')
+    </insert>
+    <!--修改用户密码-->
+    <update id="updatePassword">
+        update user set password = #{password} where username = #{username}
+    </update>
+    <!--通过用户密码进行查询-->
+    <select id="findUserByUsernameAndPassword" resultType="com.zdx.oneruri.entity.User">
+        select * from user where username = #{username} and password = #{password}
+    </select>
+    <!--通过用户名进行查询-->
+    <select id="findUserByUsername" resultType="com.zdx.oneruri.entity.User">
+        select * from user where username = #{username}
+    </select>
+
+</mapper>
